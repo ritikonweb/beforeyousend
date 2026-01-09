@@ -1,3 +1,13 @@
+export async function GET() {
+  return new Response(
+    JSON.stringify({
+      status: "API is live",
+      method: "Use POST to send email content"
+    }),
+    { headers: { "Content-Type": "application/json" } }
+  );
+}
+
 export async function POST(req) {
   try {
     const { subject, body } = await req.json();
@@ -15,11 +25,9 @@ export async function POST(req) {
         suggested_subject: subject,
         suggested_body: body
       }),
-      {
-        headers: { "Content-Type": "application/json" }
-      }
+      { headers: { "Content-Type": "application/json" } }
     );
-  } catch (e) {
+  } catch {
     return new Response(
       JSON.stringify({ error: "Server error" }),
       { status: 500 }
