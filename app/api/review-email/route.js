@@ -1,15 +1,3 @@
-export async function GET() {
-  return new Response(
-    JSON.stringify({
-      status: "API is live",
-      note: "Use POST method"
-    }),
-    {
-      headers: { "Content-Type": "application/json" }
-    }
-  );
-}
-
 export async function POST(req) {
   try {
     const { subject, body } = await req.json();
@@ -87,28 +75,35 @@ ${body}
 
     const data = await geminiResponse.json();
 
-let rawText =
-  data?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+    let rawText =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
 
-// 🔒 Clean Gemini formatting (very important)
-rawText = rawText
-  .replace(/```json/g, "")
-  .replace(/```/g, "")
-  .trim();
+    rawText = rawText
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
 
-let parsed;
-try {
-  parsed = JSON.parse(rawText);
-} catch (e) {
-  return new Response(
-    JSON.stringify({
-      error: "Invalid AI response",
-      raw: rawText
-    }),
-    { status: 500 }
-  );
+    let parsed;
+    try {
+      parsed = JSON.parse(rawText);
+    } catch (e) {
+      return new Response(
+        JSON.stringify({
+          error: "Invalid AI response",
+          raw: rawText
+        }),
+        { status: 500 }
+      );
+    }
+
+    return new Response(JSON.stringify(parsed), {
+      headers: { "Content-Type": "application/json" }
+    });
+
+  } catch (err) {
+    return new Response(
+      JSON.stringify({ error: "Gemini processing failed" }),
+      { status: 500 }
+    );
+  }
 }
-
-return new Response(JSON.stringify(parsed), {
-  headers: { "Content-Type": "application/json" }
-});
