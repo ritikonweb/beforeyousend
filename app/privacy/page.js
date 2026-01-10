@@ -3,7 +3,7 @@ export default function PrivacyPolicy() {
   return (
     <main style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 20px', color: '#3c4043', lineHeight: '1.6', fontFamily: 'system-ui, sans-serif' }}>
       <h1 style={{ color: '#1a73e8', fontSize: '2.5rem', marginBottom: '10px' }}>Privacy Policy</h1>
-      <p style={{ color: '#70757a', marginBottom: '40px' }}>Last Updated: October 2023</p>
+      <p style={{ color: '#70757a', marginBottom: '40px' }}>Last Updated: January 2026</p>
 
       <section style={{ marginBottom: '30px' }}>
         <h2>1. Single Purpose</h2>
